@@ -2,8 +2,8 @@
 
 ## このプロジェクトについて
 
-Claude Codeを学ぶためのカリキュラム管理リポジトリ。
-`CURRICULUM.md`（macOS版）と `CURRICULUM_WINDOWS.md`（Windows版）を継続的に改善・拡充する。
+Claude Code および OpenAI Codex CLI を学ぶためのカリキュラム管理リポジトリ。
+各ツール・OS向けのカリキュラムファイルを継続的に改善・拡充する。
 
 ## 設計方針（変えてはいけないこと）
 
@@ -19,14 +19,18 @@ Claude Codeを学ぶためのカリキュラム管理リポジトリ。
 
 | ファイル | 内容 |
 |---------|------|
-| `CURRICULUM.md` | macOS向けカリキュラム本体（Phase 0〜9） |
-| `CURRICULUM_WINDOWS.md` | Windows向けカリキュラム本体（Phase 0〜9） |
+| `CURRICULUM_CLAUDE_MAC.md` | Claude Code macOS版カリキュラム（Phase 0〜9） |
+| `CURRICULUM_CLAUDE_WINDOWS.md` | Claude Code Windows版カリキュラム（Phase 0〜9） |
+| `CURRICULUM_CODEX_MAC.md` | Codex CLI macOS版カリキュラム（Phase 0〜9） |
+| `CURRICULUM_CODEX_WINDOWS.md` | Codex CLI Windows版カリキュラム（WSL2前提）（Phase 0〜9） |
 | `CLAUDE.md` | このファイル。設計方針・状態・変更履歴を記録する |
 
 ## 現在の状態
 
-- `CURRICULUM.md`: Phase 0〜9 完成
-- `CURRICULUM_WINDOWS.md`: Phase 0〜9 完成
+- `CURRICULUM_CLAUDE_MAC.md`: Phase 0〜9 完成（旧 CURRICULUM.md）
+- `CURRICULUM_CLAUDE_WINDOWS.md`: Phase 0〜9 完成（旧 CURRICULUM_WINDOWS.md）
+- `CURRICULUM_CODEX_MAC.md`: Phase 0〜9 完成
+- `CURRICULUM_CODEX_WINDOWS.md`: Phase 0〜9 完成（WSL2前提）
 - `/end-phase` スキル: Phase 3 タスクP3-6として組み込み済み
 - `/rename` `/tag` の説明: Phase 1 タスクP1-5に追加済み
 
@@ -48,6 +52,8 @@ Claude Codeを学ぶためのカリキュラム管理リポジトリ。
 | 2026-02-27 | CURRICULUM_WINDOWS.md 作成（Windows版） |
 | 2026-02-27 | `/rename` `/tag` の意味をPhase 1 P1-5に追加；`/end-phase` スキルをPhase 3 P3-6として追加 |
 | 2026-02-27 | CLAUDE.md 作成（コンテキスト保全のため） |
+| 2026-02-28 | CURRICULUM.md → CURRICULUM_CLAUDE_MAC.md、CURRICULUM_WINDOWS.md → CURRICULUM_CLAUDE_WINDOWS.md にリネーム |
+| 2026-02-28 | CURRICULUM_CODEX_MAC.md・CURRICULUM_CODEX_WINDOWS.md 新規作成（Codex CLI版） |
 
 ## 次に改善したいこと（アイデアメモ）
 
