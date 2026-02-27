@@ -15,7 +15,8 @@
 | 日付 | 変更内容 |
 |------|---------|
 | 2026-02-27 | 初版作成（Phase 0〜9） |
-| 2026-02-27 | `/rename` `/tag` の意味をPhase 1 P1-5に追加；`/end-phase` スキルをPhase 3 P3-6として追加 |
+| 2026-02-27 | `/rename` の意味をPhase 1 P1-5に追加；`/end-phase` スキルをPhase 3 P3-6として追加 |
+| 2026-02-27 | 存在しない `/tag` コマンドをすべて削除 |
 
 ---
 
@@ -27,8 +28,7 @@
 1. フェーズ内のタスクをすべて完了
 2. featureブランチを commit → push → Pull Request作成（フェーズにより手動/Skills）
 3. `/rename` で現在のセッションに名前をつける（例: `/rename phase1-design`）
-4. `/tag` でタグをつける（例: `/tag phase1, done`）
-5. Claude Code セッションを終了
+4. Claude Code セッションを終了
 6. 次のフェーズは **新しいセッション** で開始（Claude CodeはCLAUDE.mdを読んでコンテキストを把握する）
 
 **なぜセッションを分けるか:**
@@ -347,10 +347,9 @@ git push origin main
 セッション管理:
 ```
 /rename phase0-env-setup
-/tag phase0, env, setup
 ```
 
-> **注:** `/rename` と `/tag` の意味はPhase 1のタスクP1-5で詳しく説明します。今は指示通り実行してください。
+> **注:** `/rename` の意味はPhase 1のタスクP1-5で詳しく説明します。今は指示通り実行してください。
 
 **→ ここでClaude Codeセッションを終了して、新しいセッションでPhase 1を開始する**
 
@@ -361,7 +360,7 @@ git push origin main
 # Phase 1: 基本対話・プランニング・コミュニケーション保存
 
 **このフェーズで習得すること:**
-- スラッシュコマンド（/help, /model, /memory, /rename, /tag, /resume）
+- スラッシュコマンド（/help, /model, /memory, /rename, /resume）
 - Plan Mode初体験（`claude --plan`）
 - CLAUDE.mdへの保存習慣（コミュニケーション保存）
 - セッション管理と再開
@@ -429,7 +428,7 @@ Plan Modeで決定した設計内容をCLAUDE.mdに記録してください。
 > ```
 > Layer 1: CLAUDE.md    ← 長期保存（プロジェクト全体の知識・方針）
 > Layer 2: /memory      ← 中期保存（セッション間で保持したい情報）
-> Layer 3: /rename+/tag ← セッション管理（後で再開できるように整理）
+> Layer 3: /rename ← セッション管理（後で再開できるように整理）
 > ```
 
 ## タスク P1-4: /memory コマンドの確認
@@ -446,28 +445,22 @@ Plan Modeで決定した設計内容をCLAUDE.mdに記録してください。
 - 採用したデータモデルの概要
 ```
 
-## タスク P1-5: セッション管理の練習（/rename と /tag を理解する）
+## タスク P1-5: セッション管理の練習（/rename を理解する）
 
 > **`/rename` とは:**
 > 現在のセッションに分かりやすい名前をつけるコマンド。
 > 名前をつけないと「Session 2026-02-27 14:23」のような自動生成名になり、
 > あとで `/resume` で一覧を見たときにどの作業か判別できなくなる。
 >
-> **`/tag` とは:**
-> セッションにタグをつけてグループ化・検索できるようにするコマンド。
-> 複数タグはカンマ区切りで指定できる。
-> 例: `/tag phase1, design` → phase1タグとdesignタグで後から絞り込める。
->
 > **なぜ毎フェーズ実施するか:**
 > Claude Codeセッションを終了すると会話履歴は引き継がれない。
-> `/rename` + `/tag` しておくことで、`/resume` でその時点の文脈を呼び戻して作業を再開できる。
+> `/rename` しておくことで、`/resume` でその時点の文脈を呼び戻して作業を再開できる。
 > CLAUDE.mdが「**何を**作っているか」を伝えるなら、
 > セッション名は「**どこまで**作業したか」を伝えるブックマーク。
 
 以下を試す:
 ```
 /rename phase1-design-session
-/tag phase1, design, planning
 ```
 
 セッション終了 → `claude` 再起動 → `/resume` でセッション一覧から選択して再開する体験をする。
@@ -510,7 +503,6 @@ git pull origin main
 セッション管理:
 ```
 /rename phase1-design-complete
-/tag phase1, done
 ```
 
 **→ セッション終了。新しいセッションでPhase 2を開始する**
@@ -657,7 +649,6 @@ git checkout main && git pull origin main
 セッション管理:
 ```
 /rename phase2-impl-complete
-/tag phase2, done
 ```
 
 **→ セッション終了。新しいセッションでPhase 3を開始する**
@@ -752,7 +743,7 @@ allowed-tools: Read, Bash, Grep, Glob
 
 ## タスク P3-6: セッション終了の半自動化【/end-phase カスタムSkill】
 
-毎フェーズ末に `/rename` と `/tag` の引数を手動で考えるのは手間です。
+毎フェーズ末に `/rename` の名前を手動で考えるのは手間です。
 カスタムSkillを作って半自動化しましょう。
 
 ```
@@ -762,7 +753,7 @@ allowed-tools: Read, Bash, Grep, Glob
 内容:
 ---
 name: end-phase
-description: フェーズ完了時のセッション管理を補助する。現在の作業内容からセッション名とタグを自動提案し、CLAUDE.mdの現在フェーズを更新する。
+description: フェーズ完了時のセッション管理を補助する。現在の作業内容から適切なセッション名を自動提案し、CLAUDE.mdの現在フェーズを更新する。
 allowed-tools: Read, Edit
 ---
 
@@ -771,15 +762,12 @@ allowed-tools: Read, Edit
 1. CLAUDE.md を読んで「現在のフェーズ」と直近の作業内容を確認する
 2. 作業内容から適切なセッション名（英語ケバブケース）を提案する
    例: phase3-hooks-skill-complete
-3. 適切なタグを提案する（フェーズ番号 + 作業キーワード + done）
-   例: phase3, hooks, skill, done
-4. 以下の形式でコピペしやすく出力する:
+3. 以下の形式でコピペしやすく出力する:
 
    📋 セッション終了コマンド（コピペして実行してください）:
    /rename <提案した名前>
-   /tag <提案したタグ>
 
-5. CLAUDE.mdの「現在のフェーズ」を次のフェーズに更新してよいか確認する。
+4. CLAUDE.mdの「現在のフェーズ」を次のフェーズに更新してよいか確認する。
    OKなら自動で更新する。
 
 スキル作成後、/end-phase を実行して動作確認してください。
@@ -790,7 +778,7 @@ allowed-tools: Read, Edit
 > - CLAUDE.mdの「現在のフェーズ」更新も忘れなくなる
 > - **Phase 3以降はすべてのフェーズ末に `/end-phase` を使う**
 >
-> **注:** `/rename` と `/tag` はClaude Code内部コマンドのためSkillが直接実行できない。
+> **注:** `/rename` はClaude Code内部コマンドのためSkillが直接実行できない。
 > Skillが提案するコマンドをコピペして実行する形になる（それでも手動より大幅に楽）。
 
 ---
@@ -800,7 +788,7 @@ allowed-tools: Read, Edit
 - [ ] Pythonファイル保存時にruffが自動実行される
 - [ ] Bashツール実行後にpytestが自動実行される
 - [ ] `/taskr-status` コマンドが動作する
-- [ ] `/end-phase` コマンドがセッション名とタグを自動提案してくれる
+- [ ] `/end-phase` コマンドがセッション名を自動提案してくれる
 
 ## Phase 3 コミット & プッシュ【/commit + 手動push/PR（定着）】
 
@@ -827,7 +815,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 4を開始する**
 
@@ -928,7 +916,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 5を開始する**
 
@@ -1013,7 +1001,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 6を開始する**
 
@@ -1118,7 +1106,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 7を開始する**
 
@@ -1224,7 +1212,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 8を開始する**
 
@@ -1323,7 +1311,7 @@ git checkout main && git pull origin main
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 **→ セッション終了。新しいセッションでPhase 9を開始する**
 
@@ -1446,7 +1434,7 @@ GitHub Flowの全工程をプロンプト一発で完結させる:
 ```
 /end-phase
 ```
-→ Claudeが作業内容からセッション名とタグを自動提案してくれる。提案された `/rename` と `/tag` コマンドをコピペして実行する。
+→ Claudeが作業内容から適切なセッション名を提案してくれる。提案された `/rename` コマンドをコピペして実行する。
 
 ---
 
@@ -1462,7 +1450,7 @@ GitHub Flowの全工程をプロンプト一発で完結させる:
 | **Subagent** | Phase 4, 6, 7, 9 で並列調査・実装を委託した |
 | **Agent Teams** | Phase 7〜9 で複数エージェントが協調して作業した |
 | **Plan Mode** | Phase 1, 6 で設計書を作成してから実装した |
-| **コミュニケーション保存** | CLAUDE.md + /memory + /rename+/tag で全フェーズを引き継いだ |
+| **コミュニケーション保存** | CLAUDE.md + /memory + /rename で全フェーズを引き継いだ |
 | **GitHub Flow** | 手動操作 → Skills自動化 → 完全自動化の変遷を体験した |
 
 **taskr v1.0.0 のリポジトリを公開してカリキュラム完了！**
