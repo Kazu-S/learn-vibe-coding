@@ -255,7 +255,16 @@ gh auth login   # ブラウザでGitHub認証
 - AGENTS.mdの作成（Codex CLIのコンテキスト引き継ぎファイル）
 - GitHubリポジトリの初期化
 
-**セッション開始:** WSL2（Ubuntu）ターミナルで `codex` を起動
+**セッション開始前に（手動）:** 学習作業を行うディレクトリを自分で決めて作成し、そこへ移動してから `codex` を起動する。
+
+```bash
+# 例: 好きな場所に作業ディレクトリを作成（WSL2ターミナルで実行）
+mkdir -p ~/your/working/directory
+cd ~/your/working/directory
+codex   # このディレクトリで起動することが重要
+```
+
+> 以降の手順はすべて「codex を起動したディレクトリ」を基準に動作します。
 
 > **Agent活用の原則（このフェーズから意識する）**
 > メインセッションは「指示を出す」ことに専念し、実行はCodex CLIに任せる。
@@ -283,16 +292,11 @@ gh auth login   # ブラウザでGitHub認証
 Codex CLIを起動する前に、WSL2内で以下を確認・実行する:
 
 ```bash
-# WSL2（Ubuntu）ターミナルで実行
-# 作業ディレクトリの作成
-mkdir -p ~/study/workspace/learn_claude
-cd ~/study/workspace/learn_claude
-
 # WSL2からWindowsのファイルシステムにアクセスする場合のパス確認
 # （必要に応じて）Windowsのファイルは /mnt/c/Users/<username>/ からアクセス可能
 ls /mnt/c/Users/
 
-# Codex CLIを起動
+# Codex CLIを起動（作業ディレクトリで起動済みであること）
 codex
 ```
 
@@ -339,8 +343,8 @@ uvを使ってtaskrプロジェクトのPython環境をWSL2（Ubuntu）上でセ
 
 順番に実行してください（各ステップ前に確認を取ること）:
 1. uv python install 3.12
-2. mkdir -p ~/study/workspace/learn_claude/taskr
-3. cd ~/study/workspace/learn_claude/taskr
+2. mkdir taskr
+3. cd taskr
 4. uv init --python 3.12
 5. uv venv
 6. uv add click
@@ -356,8 +360,8 @@ uvを使ってtaskrプロジェクトのPython環境をWSL2（Ubuntu）上でセ
 ```
 以下を順番に実施してください（WSL2のbash環境で）:
 
-1. gh repo create learn_claude --public でGitHubリポジトリを作成
-2. ~/study/workspace/learn_claude/ で git init
+1. gh repo create learn_claude --private でGitHubリポジトリを作成
+2. git init（カレントディレクトリで実行）
 3. git remote add origin [リポジトリURL]
 4. ~/.codex/config.toml を以下の内容で作成:
 
@@ -444,7 +448,7 @@ Phase 0はmainブランチへ直接コミット（初期セットアップのた
 ```bash
 git add AGENTS.md .gitignore .codexignore taskr/pyproject.toml
 git commit -m "feat(phase0): initial project setup with Python 3.12 via uv on WSL2"
-git push origin main
+git push -u origin main
 ```
 
 セッション管理:
@@ -568,7 +572,7 @@ Suggest Modeで確認した設計内容をAGENTS.mdに記録してください�
 ## タスク P1-4: /mention コマンドの活用
 
 ```
-/mention ~/study/workspace/learn_claude/taskr/pyproject.toml
+/mention taskr/pyproject.toml
 ```
 
 → ファイルをコンテキストに追加してから、内容について質問・分析する体験をする。
@@ -852,7 +856,7 @@ notify設定2: notify-send が使える場合はデスクトップ通知も追�
 
 1. デフォルトモデルを o4-mini に設定（既に設定済みか確認）
 2. 承認モードを suggest に設定（既に設定済みか確認）
-3. 作業ディレクトリのデフォルトを ~/study/workspace/learn_claude/ に設定
+3. 作業ディレクトリのデフォルトを（codex を起動したディレクトリ）に設定
 4. 設定の全オプションと意味を説明してください
 
 設定後、codex を再起動して設定が反映されているか /status で確認してください。
