@@ -33,6 +33,8 @@ Claude Code および OpenAI Codex CLI を学ぶためのカリキュラム管�
 - `CURRICULUM_CODEX_WINDOWS.md`: Phase 0〜9 完成（WSL2前提）
 - `/end-phase` スキル: Phase 3 タスクP3-6として組み込み済み
 - `/rename` `/tag` の説明: Phase 1 タスクP1-5に追加済み
+- `Skills/カスタムコマンド`の説明: Phase 2に3種の区別（自動起動Skills・カスタムコマンド・組み込みコマンド）を追記済み
+- `/revise-claude-md` プラグイン: Phase 0 P0-5のsettings.json設定に有効化手順を追記済み
 
 ## カリキュラム改善時のワークフロー
 
@@ -54,6 +56,7 @@ Claude Code および OpenAI Codex CLI を学ぶためのカリキュラム管�
 | 2026-02-27 | CLAUDE.md 作成（コンテキスト保全のため） |
 | 2026-02-28 | CURRICULUM.md → CURRICULUM_CLAUDE_MAC.md、CURRICULUM_WINDOWS.md → CURRICULUM_CLAUDE_WINDOWS.md にリネーム |
 | 2026-02-28 | CURRICULUM_CODEX_MAC.md・CURRICULUM_CODEX_WINDOWS.md 新規作成（Codex CLI版） |
+| 2026-03-02 | Phase 0 P0-5にclaude-md-managementプラグイン有効化手順を追加；Phase 2「Skillsとは」説明を修正（自動起動Skills・カスタムコマンド・組み込みコマンドの区別を明記）(#1) |
 
 ## 次に改善したいこと（アイデアメモ）
 
