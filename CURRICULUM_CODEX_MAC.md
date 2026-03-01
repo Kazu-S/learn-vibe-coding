@@ -278,6 +278,7 @@ brew install gh
 
 # ない場合はCodex CLIが適切な方法を案内してくれる
 gh auth login   # ブラウザでGitHub認証
+gh auth status  # 認証済みと表示されることを確認
 ```
 
 ## タスク P0-4: Python + 仮想環境のセットアップ
@@ -292,7 +293,7 @@ uvを使ってtaskrプロジェクトのPython環境をセットアップして�
 4. uv init --python 3.12
 5. uv venv
 6. uv add click
-7. uv add --dev pytest ruff
+7. uv add --dev pytest ruff pytest-cov
 8. uv run python --version で動作確認
 9. pyproject.tomlの内容を表示して確認
 
@@ -547,7 +548,7 @@ git checkout -b feature/phase1-design
 # 作業完了後
 git add AGENTS.md
 git commit -m "docs(phase1): add design decisions and taskr architecture plan"
-git push origin feature/phase1-design
+git push -u origin feature/phase1-design
 
 # Pull Requestを手動で作成
 gh pr create \
@@ -711,7 +712,7 @@ git add -u   # 手動でステージング
 
 ```bash
 # push と PR作成は手動
-git push origin feature/phase2-core-impl
+git push -u origin feature/phase2-core-impl
 gh pr create \
   --title "feat(phase2): implement core taskr CLI" \
   --body "add/list/done/deleteコマンドとJSONストレージを実装。pytestテスト付き。" \
@@ -898,7 +899,7 @@ git add taskr/.codexignore AGENTS.md
 ```
 
 ```bash
-git push origin feature/phase3-notify-commands
+git push -u origin feature/phase3-notify-commands
 gh pr create \
   --title "feat(phase3): add notify config and taskr-status custom command" \
   --body "config.tomlのnotify設定を追加。カスタムコマンド(/taskr-status)を自作。" \

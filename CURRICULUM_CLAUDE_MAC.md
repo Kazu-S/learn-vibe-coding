@@ -247,6 +247,7 @@ brew install gh
 
 # ない場合はClaude Codeが適切な方法を案内してくれる
 gh auth login   # ブラウザでGitHub認証
+gh auth status  # 認証済みと表示されることを確認
 ```
 
 ## タスク P0-4: Python + 仮想環境のセットアップ
@@ -278,13 +279,20 @@ uvを使ってtaskrプロジェクトのPython環境をセットアップして�
 3. git remote add origin [リポジトリURL]
 4. ~/.zshrc に以下を追加:
    export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
-5. ~/.claude/settings.json を以下の内容で作成:
+   追加後は以下を実行して反映させてください:
+   source ~/.zshrc
+   echo $CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS  # 1 が表示されればOK
+5. ~/.claude/ ディレクトリを作成（存在しない場合）:
+   mkdir -p ~/.claude
+   ~/.claude/settings.json を以下の内容で作成:
    {
      "enabledPlugins": {
-       "claude-md-management@claude-plugins-official": true
+       "claude-md-management@claude-plugins-official": true,
+       "commit-commands@claude-plugins-official": true,
+       "feature-dev@claude-plugins-official": true
      }
    }
-   （`/revise-claude-md` コマンドを使えるようにするため）
+   （`/revise-claude-md`, `/commit`, `/commit-push-pr`, `/feature-dev` コマンドを使えるようにするため）
 6. CLAUDE.md を以下の内容で作成:
 
 ---
@@ -681,6 +689,11 @@ git checkout main && git pull origin main
 **フェーズ開始時にブランチを作成（手動）:**
 ```bash
 git checkout -b feature/phase3-hooks-skill
+```
+
+フックスクリプト用ディレクトリを作成:
+```bash
+mkdir -p ~/.claude/hooks
 ```
 
 ---

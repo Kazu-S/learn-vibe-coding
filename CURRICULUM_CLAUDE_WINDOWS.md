@@ -252,8 +252,9 @@ Claude Codeが以下を提案するので承認するだけ:
 
 ```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-# PowerShellを再起動後
-uv --version   # 確認
+# PowerShellを再起動してPATHを反映させてください
+# 再起動後に確認:
+uv --version      # バージョンが表示されればOK
 ```
 
 > **注意:** ExecutionPolicy の変更を求められた場合は `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` を実行してから再試行。
@@ -266,6 +267,7 @@ winget install GitHub.cli
 
 # winget がない場合は https://cli.github.com/ からインストーラをDL
 gh auth login   # ブラウザでGitHub認証
+gh auth status  # 認証済みと表示されることを確認
 ```
 
 ## タスク P0-4: Python + 仮想環境のセットアップ
@@ -300,8 +302,18 @@ WindowsのPowerShell環境で実行してください。
    - プロファイルファイルのパスを確認: echo $PROFILE
    - 以下を追記: $env:CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1"
    - プロファイルを再読み込み: . $PROFILE
-5. "$env:USERPROFILE\.claude\settings.json" に空のJSON {} を作成
-6. CLAUDE.md を以下の内容で作成:
+   - 確認: echo $env:CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS  # 1 が表示されればOK
+5. ~/.claude/ フォルダを作成（存在しない場合）:
+   mkdir -Force "$env:USERPROFILE\.claude"
+6. "$env:USERPROFILE\.claude\settings.json" に以下のJSONを作成:
+   {
+     "enabledPlugins": {
+       "claude-md-management@claude-plugins-official": true,
+       "commit-commands@claude-plugins-official": true,
+       "feature-dev@claude-plugins-official": true
+     }
+   }
+7. CLAUDE.md を以下の内容で作成:
 
 ---
 # taskr プロジェクト
@@ -686,6 +698,11 @@ git checkout main; git pull origin main
 **フェーズ開始時にブランチを作成（手動）:**
 ```powershell
 git checkout -b feature/phase3-hooks-skill
+```
+
+フックスクリプト用ディレクトリを作成:
+```powershell
+mkdir -Force "$env:USERPROFILE\.claude\hooks"
 ```
 
 ---
