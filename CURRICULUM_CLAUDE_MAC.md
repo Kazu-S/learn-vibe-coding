@@ -345,7 +345,7 @@ Phase 0はmainブランチへ直接コミット（初期セットアップのた
 ```bash
 git add CLAUDE.md .gitignore .claudeignore taskr/pyproject.toml
 git commit -m "feat(phase0): initial project setup with Python 3.12 via uv"
-git push origin main
+git push -u origin main
 ```
 
 セッション管理:
