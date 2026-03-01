@@ -134,27 +134,22 @@ git --version  # git version 2.x.x が表示されれば成功
 
 ---
 
-## Step 4: Node.js のインストール（Claude Code CLI に必要）
+## Step 4: Claude Code CLI のインストール
+
+Node.js は不要です。公式のネイティブインストーラーを使用します。
 
 ```bash
-node --version  # v18以上であればOK
-```
-
-インストールされていない場合: `https://nodejs.org/` から **LTS版** をダウンロードしてインストール
-
----
-
-## Step 5: Claude Code CLI のインストール
-
-```bash
-npm install -g @anthropic-ai/claude-code
+# macOS ネイティブインストーラー（Node.js 不要）
+curl -fsSL https://claude.ai/install.sh | sh
 claude --version   # バージョンが表示されれば成功
 claude login       # ブラウザが開く → Anthropicアカウントでログイン
 ```
 
+> **補足:** 最新のインストール手順は公式ドキュメント（https://docs.anthropic.com/ja/docs/claude-code/setup）を確認してください。
+
 ---
 
-## Step 6: VS Code の Claude Code 拡張機能をインストール
+## Step 5: VS Code の Claude Code 拡張機能をインストール
 
 1. VS Codeを開く
 2. 左サイドバーの拡張機能アイコン（四角）をクリック
