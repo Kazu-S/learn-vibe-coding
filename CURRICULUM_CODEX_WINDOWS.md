@@ -112,6 +112,13 @@
 
 ## Step 1: WSL2 + Ubuntu 22.04 のインストール
 
+> **PowerShell スクリプト実行ポリシーの設定（初回のみ）**
+> PowerShell を管理者として起動し、以下を実行してください:
+> ```powershell
+> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+> これを設定しないと、インストールスクリプトがブロックされます。
+
 **PowerShellで実行（管理者権限不要）:**
 
 ```powershell
@@ -170,6 +177,7 @@ sudo apt install git -y
 # ユーザー設定
 git config --global user.name "あなたの名前"
 git config --global user.email "あなたのメール"
+git config --global core.autocrlf false  # WSL2環境ではLFに統一
 ```
 
 ---
@@ -217,6 +225,7 @@ export OPENAI_API_KEY="sk-..."   # 取得したAPIキー
 # 永続化（~/.bashrc または ~/.zshrc に追記）
 echo 'export OPENAI_API_KEY="sk-..."' >> ~/.bashrc
 source ~/.bashrc
+echo $OPENAI_API_KEY  # 値が表示されればOK（先頭の sk- が見えればよい）
 ```
 
 ---
@@ -227,6 +236,7 @@ source ~/.bashrc
 # WSL2（Ubuntu）ターミナルで実行
 sudo apt install gh -y
 gh auth login   # ブラウザでGitHub認証
+gh auth status  # 認証済みと表示されることを確認
 ```
 
 ---
@@ -334,6 +344,7 @@ uv --version   # 確認
 # Ubuntu（WSL2）での gh CLI インストール
 sudo apt install gh -y
 gh auth login   # ブラウザでGitHub認証
+gh auth status  # 認証済みと表示されることを確認
 ```
 
 ## タスク P0-4: Python + 仮想環境のセットアップ
@@ -348,7 +359,7 @@ uvを使ってtaskrプロジェクトのPython環境をWSL2（Ubuntu）上でセ
 4. uv init --python 3.12
 5. uv venv
 6. uv add click
-7. uv add --dev pytest ruff
+7. uv add --dev pytest ruff pytest-cov
 8. uv run python --version で動作確認
 9. pyproject.tomlの内容を表示して確認
 
@@ -618,7 +629,7 @@ taskrプロジェクトに必要な依存関係が揃っているか評価して
 git checkout -b feature/phase1-design
 git add AGENTS.md
 git commit -m "docs(phase1): add design decisions and taskr architecture plan"
-git push origin feature/phase1-design
+git push -u origin feature/phase1-design
 gh pr create \
   --title "docs(phase1): add design decisions" \
   --body "Suggest Modeで確認した設計内容をAGENTS.mdに記録" \
@@ -791,7 +802,7 @@ git add -u
 ```
 
 ```bash
-git push origin feature/phase2-core-impl
+git push -u origin feature/phase2-core-impl
 gh pr create \
   --title "feat(phase2): implement core taskr CLI" \
   --body "add/list/done/deleteコマンドとJSONストレージを実装。pytestテスト付き。" \
@@ -848,6 +859,9 @@ notify設定2: notify-send が使える場合はデスクトップ通知も追�
 > macOSの `osascript` はWSL2では使えない。
 > WSL2ではターミナルへの `echo` 出力か `notify-send` を使う。
 > `notify-send` を使うにはWSL2の GUI統合（WSLg）が有効である必要がある。
+
+> **注意:** `notify-send` を使ったデスクトップ通知は WSLg（Windows 11 + WSL2）が必要です。
+> Windows 10 の場合は `echo` を使ったコンソール出力に変更してください。
 
 ## タスク P3-2: config.toml の高度な設定
 
@@ -972,7 +986,7 @@ git add taskr/.codexignore AGENTS.md
 ```
 
 ```bash
-git push origin feature/phase3-hooks-custom-cmd
+git push -u origin feature/phase3-hooks-custom-cmd
 gh pr create \
   --title "feat(phase3): add codexignore and update AGENTS.md" \
   --body "notify hook設定、カスタムコマンド(/taskr-status, /end-phase)を自作。" \
@@ -1026,6 +1040,8 @@ env = { GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN" }
 
 事前に必要なこと:
 1. GitHub Personal Access Token を取得（Settings → Developer settings → Personal access tokens）
+   > **必要な PAT スコープ:** `repo`, `workflow`
+   > GitHub の Settings → Developer settings → Personal access tokens で作成してください。
 2. ~/.bashrc に export GITHUB_TOKEN="ghp_..." を追加
 3. source ~/.bashrc
 
@@ -1033,6 +1049,9 @@ env = { GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN" }
 1. GitHub MCPでlearn_claudeリポジトリのIssue一覧を取得
 2. Phase 3で作成したIssueをMCP経由でクローズ
 ```
+
+設定後は `/quit` でセッションを終了し、新しいセッションを開始してください。
+その後 `/status` で GitHub MCP が読み込まれていることを確認してください。
 
 > **Codex CLIのMCP設定について:**
 > Claude Codeが `.mcp.json` を使うのに対し、

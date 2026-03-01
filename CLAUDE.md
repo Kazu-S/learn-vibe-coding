@@ -35,6 +35,7 @@ Claude Code および OpenAI Codex CLI を学ぶためのカリキュラム管�
 - `/rename` `/tag` の説明: Phase 1 タスクP1-5に追加済み
 - `Skills/カスタムコマンド`の説明: Phase 2に3種の区別（自動起動Skills・カスタムコマンド・組み込みコマンド）を追記済み
 - `/revise-claude-md` プラグイン: Phase 0 P0-5のsettings.json設定に有効化手順を追記済み
+- クリーンマシン対応: 全4カリキュラムのPhase 0〜3の設定漏れ14件を修正済み（#16）
 
 ## カリキュラム改善時のワークフロー
 
@@ -56,7 +57,8 @@ Claude Code および OpenAI Codex CLI を学ぶためのカリキュラム管�
 | 2026-02-27 | CLAUDE.md 作成（コンテキスト保全のため） |
 | 2026-02-28 | CURRICULUM.md → CURRICULUM_CLAUDE_MAC.md、CURRICULUM_WINDOWS.md → CURRICULUM_CLAUDE_WINDOWS.md にリネーム |
 | 2026-02-28 | CURRICULUM_CODEX_MAC.md・CURRICULUM_CODEX_WINDOWS.md 新規作成（Codex CLI版） |
-| 2026-03-02 | Phase 0 P0-5にclaude-md-managementプラグイン有効化手順を追加；Phase 2「Skillsとは」説明を修正（自動起動Skills・カスタムコマンド・組み込みコマンドの区別を明記）(#1) |
+| 2026-03-02 | Phase 0 P0-5にclaude-md-managementプラグイン有効化手順を追加；Phase 2「Skillsとは」説明を修正（自動起動Skills・カスタムコマンド・組み込みコマンドの区別を明記）(#15) |
+| 2026-03-02 | 全4カリキュラムのクリーンマシン対応修正：プラグイン有効化・source漏れ・hooks dir・pytest-cov・git push -u・ExecutionPolicy・MCP再起動・gh auth確認など計14件修正 (#16) |
 
 ## 次に改善したいこと（アイデアメモ）
 
