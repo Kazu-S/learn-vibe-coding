@@ -152,35 +152,22 @@ git config --global user.email "あなたのメール"
 
 ---
 
-## Step 5: Node.js のインストール
+## Step 5: Claude Code CLI のインストール
+
+Node.js は不要です。公式のネイティブインストーラーを使用します。
 
 ```powershell
-node --version  # v18以上であればOK
-```
-
-インストールされていない場合:
-1. `https://nodejs.org/` から **LTS版** の Windows Installer (.msi) をダウンロード
-2. インストール（デフォルト設定でOK）
-3. PowerShell を **再起動** して確認
-
-```powershell
-node --version   # v20.x.x などが表示されれば成功
-npm --version
-```
-
----
-
-## Step 6: Claude Code CLI のインストール
-
-```powershell
-npm install -g @anthropic-ai/claude-code
+# PowerShell でネイティブインストーラーを実行
+iwr https://claude.ai/install.ps1 | iex
 claude --version   # バージョンが表示されれば成功
 claude login       # ブラウザが開く → Anthropicアカウントでログイン
 ```
 
+> **補足:** 最新のインストール手順は公式ドキュメント（https://docs.anthropic.com/ja/docs/claude-code/setup）を確認してください。
+
 ---
 
-## Step 7: VS Code の Claude Code 拡張機能をインストール
+## Step 6: VS Code の Claude Code 拡張機能をインストール
 
 1. VS Codeを開く
 2. 左サイドバーの拡張機能アイコン（四角）をクリック
@@ -197,7 +184,6 @@ claude login       # ブラウザが開く → Anthropicアカウントでログ
 
 - [ ] `code --version` が動作する
 - [ ] `git --version` が動作する
-- [ ] `node --version` が v18以上
 - [ ] `claude --version` が動作する
 - [ ] `claude` 起動後にログイン済みと表示される
 - [ ] VS Code に Claude Code 拡張がインストール済み
@@ -215,7 +201,16 @@ claude login       # ブラウザが開く → Anthropicアカウントでログ
 - uv（Python管理ツール）による仮想環境構築
 - GitHubリポジトリの初期化
 
-**セッション開始:** Windows Terminal（PowerShell 7）で `claude` を起動
+**セッション開始前に（手動）:** 学習作業を行うディレクトリを自分で決めて作成し、そこへ移動してから `claude` を起動する。
+
+```powershell
+# 例: 好きな場所に作業ディレクトリを作成
+mkdir $env:USERPROFILE\your\working\directory
+cd $env:USERPROFILE\your\working\directory
+claude   # このディレクトリで起動することが重要
+```
+
+> 以降の手順はすべて「claude を起動したディレクトリ」を基準に動作します。
 
 > **Agent活用の原則（このフェーズから意識する）**
 > メインセッションは「指示を出す」ことに専念し、実行はClaude Codeに任せる。
@@ -281,8 +276,8 @@ WindowsのPowerShell環境で実行してください。
 
 順番に実行してください（各ステップ前に確認を取ること）:
 1. uv python install 3.12
-2. New-Item -ItemType Directory -Path "$env:USERPROFILE\study\workspace\learn_claude\taskr" -Force
-3. Set-Location "$env:USERPROFILE\study\workspace\learn_claude\taskr"
+2. mkdir taskr
+3. cd taskr
 4. uv init --python 3.12
 5. uv venv
 6. uv add click
@@ -298,8 +293,8 @@ WindowsのPowerShell環境で実行してください。
 ```
 以下を順番に実施してください（PowerShell環境で）:
 
-1. gh repo create learn_claude --public でGitHubリポジトリを作成
-2. "$env:USERPROFILE\study\workspace\learn_claude\" で git init
+1. gh repo create learn_claude --private でGitHubリポジトリを作成
+2. git init（カレントディレクトリで実行）
 3. git remote add origin [リポジトリURL]
 4. PowerShellプロファイルに環境変数を追加:
    - プロファイルファイルのパスを確認: echo $PROFILE
@@ -375,7 +370,7 @@ Phase 0はmainブランチへ直接コミット（初期セットアップのた
 ```powershell
 git add CLAUDE.md .gitignore .claudeignore taskr/pyproject.toml
 git commit -m "feat(phase0): initial project setup with Python 3.12 via uv"
-git push origin main
+git push -u origin main
 ```
 
 セッション管理:

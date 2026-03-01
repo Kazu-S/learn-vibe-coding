@@ -214,7 +214,16 @@ Codex CLIはターミナルツールですが、VS Codeと組み合わせると�
 - uv（Python管理ツール）による仮想環境構築
 - GitHubリポジトリの初期化
 
-**セッション開始:** ターミナルで `codex` を起動
+**セッション開始前に（手動）:** 学習作業を行うディレクトリを自分で決めて作成し、そこへ移動してから `codex` を起動する。
+
+```bash
+# 例: 好きな場所に作業ディレクトリを作成
+mkdir -p ~/your/working/directory
+cd ~/your/working/directory
+codex   # このディレクトリで起動することが重要
+```
+
+> 以降の手順はすべて「codex を起動したディレクトリ」を基準に動作します。
 
 > **Agent活用の原則（このフェーズから意識する）**
 > メインセッションは「指示を出す」ことに専念し、実行はCodex CLIに任せる。
@@ -278,8 +287,8 @@ uvを使ってtaskrプロジェクトのPython環境をセットアップして�
 
 順番に実行してください（各ステップ前に確認を取ること）:
 1. uv python install 3.12
-2. mkdir -p ~/study/workspace/learn_claude/taskr
-3. cd ~/study/workspace/learn_claude/taskr
+2. mkdir taskr
+3. cd taskr
 4. uv init --python 3.12
 5. uv venv
 6. uv add click
@@ -295,8 +304,8 @@ uvを使ってtaskrプロジェクトのPython環境をセットアップして�
 ```
 以下を順番に実施してください:
 
-1. gh repo create learn_claude --public でGitHubリポジトリを作成
-2. ~/study/workspace/learn_claude/ で git init
+1. gh repo create learn_claude --private でGitHubリポジトリを作成
+2. git init（カレントディレクトリで実行）
 3. git remote add origin [リポジトリURL]
 4. ~/.codex/config.toml を以下の内容で作成:
 
@@ -373,7 +382,7 @@ Phase 0はmainブランチへ直接コミット（初期セットアップのた
 ```bash
 git add AGENTS.md .gitignore taskr/pyproject.toml
 git commit -m "feat(phase0): initial project setup with Python 3.12 via uv"
-git push origin main
+git push -u origin main
 ```
 
 セッション管理:
@@ -799,7 +808,7 @@ rm -rf を含むコマンドが提案された場合は必ず警告を表示し�
 ## タスク P3-4: .codexignore の整備
 
 ```
-~/study/workspace/learn_claude/.codexignore を作成してください。
+.codexignore を作成してください（作業ディレクトリ直下に配置）。
 Codex CLIがコンテキストに含めるべきでないファイルを除外します。
 
 除外すべきパス:
@@ -1523,7 +1532,8 @@ codex exec --full-auto "以下のリリース前チェックを自動実行し�
 
 ```bash
 # リリース前自動チェックスクリプトを作成してください
-cat > ~/study/workspace/learn_claude/scripts/pre-release-check.sh << 'EOF'
+mkdir -p scripts
+cat > scripts/pre-release-check.sh << 'EOF'
 #!/bin/bash
 set -e
 
@@ -1537,7 +1547,7 @@ git diffでmainからの変更を分析し、リリースに問題がないか�
 
 echo "=== チェック完了 ==="
 EOF
-chmod +x ~/study/workspace/learn_claude/scripts/pre-release-check.sh
+chmod +x scripts/pre-release-check.sh
 ```
 
 ```
@@ -1678,7 +1688,7 @@ uv add でライブラリを追加してから実装してください。
 
 ```bash
 # Phase 8で作成したスクリプトを実行
-bash ~/study/workspace/learn_claude/scripts/pre-release-check.sh
+bash scripts/pre-release-check.sh
 ```
 
 ```bash
