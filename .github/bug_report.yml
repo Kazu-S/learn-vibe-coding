@@ -1,0 +1,98 @@
+name: Bug report
+description: 不具合の報告（再現と期待/実結果を必須）
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        できるだけ **再現可能な情報** を書いてください。再現できると修正が速いです。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 概要
+      description: 何が起きているか（1〜3行で）
+      placeholder: "例：ログイン後に設定画面が真っ白になる"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 重要度（Severity）
+      options:
+        - S1: クリティカル（サービス停止/データ破損）
+        - S2: 高（主要機能が使えない）
+        - S3: 中（一部機能に影響/回避策あり）
+        - S4: 低（軽微/表示崩れ等）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先度（Priority）
+      options:
+        - P0: 最優先（今すぐ）
+        - P1: 高（次リリース/早急）
+        - P2: 中（計画内で対応）
+        - P3: 低（余裕があれば）
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: 手順・入力値・前提条件を具体的に
+      placeholder: "1.\n2.\n3."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待結果
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実結果
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 影響範囲
+      description: どこに影響？（ユーザー/機能/環境/頻度）
+      placeholder: |
+        - 影響ユーザー: 
+        - 影響機能: 
+        - 発生頻度: 常に / 時々 / まれ
+        - 回避策: あり/なし（あるなら内容）
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 環境情報
+      placeholder: |
+        - OS:
+        - Browser/Version:
+        - App version / commit:
+        - 端末:
+    validations:
+      required: false
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 証跡（ログ/スクショ/動画/リンク）
+      description: 個人情報や機密がある場合はマスクしてください
+    validations:
+      required: false

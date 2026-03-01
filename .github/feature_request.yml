@@ -1,0 +1,75 @@
+name: Feature request
+description: 機能追加/改善（目的と受け入れ条件を必須）
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **「なぜ必要か」→「何を作るか」→「完了条件」** の順で書くとブレません。
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目的（Why）
+      description: 何を解決したい？誰のため？
+      placeholder: "例：ユーザーが設定を探しやすくして離脱を減らす"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案内容（What）
+      description: どう変える？何を追加する？
+      placeholder: "例：設定画面に検索ボックスを追加する"
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_story
+    attributes:
+      label: ユーザーストーリー（任意）
+      placeholder: "As a <user>, I want <feature> so that <benefit>."
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 受け入れ条件（Acceptance Criteria）
+      description: これを満たせば Done（テスト可能な形で）
+      placeholder: |
+        - [ ] 条件1（例：設定項目名で部分一致検索できる）
+        - [ ] 条件2（例：0件の場合は「該当なし」を表示）
+        - [ ] 条件3（例：モバイルでも崩れない）
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goal
+    attributes:
+      label: やらないこと（Non-goals）
+      description: スコープ外を明記（炎上予防）
+      placeholder: "例：検索結果の並び替えは今回対象外"
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影響範囲/依存関係
+      placeholder: |
+        - 影響する画面/モジュール:
+        - 既存仕様への影響:
+        - 依存Issue/PR:
+        - リスク:
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考資料（リンク/モック/スクショ）
+    validations:
+      required: false

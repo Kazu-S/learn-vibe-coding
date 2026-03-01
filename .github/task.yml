@@ -1,0 +1,57 @@
+name: Task
+description: 実装タスク（作業分解・Done定義）
+title: "[Task] "
+labels: ["task"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景
+      description: 何のためのタスク？（関連Issueがあればリンク）
+      placeholder: "例：#123 の対応の一部。API追加に伴うドキュメント更新。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: todo
+    attributes:
+      label: 作業内容（チェックリスト）
+      placeholder: |
+        - [ ] 作業1
+        - [ ] 作業2
+        - [ ] 作業3
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: Doneの定義
+      description: 何が確認できたら完了？
+      placeholder: |
+        - [ ] テストが通る（CI含む）
+        - [ ] 影響範囲を確認した
+        - [ ] 必要ならドキュメント更新
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: タスク種別
+      options:
+        - implementation
+        - refactor
+        - docs
+        - test
+        - ci/cd
+        - investigation
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+    validations:
+      required: false
