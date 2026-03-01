@@ -273,7 +273,7 @@ uvを使ってtaskrプロジェクトのPython環境をセットアップして�
 ```
 以下を順番に実施してください:
 
-1. gh repo create learn_claude --public でGitHubリポジトリを作成
+1. gh repo create learn_claude --private でGitHubリポジトリを作成
 2. git init（カレントディレクトリで実行）
 3. git remote add origin [リポジトリURL]
 4. ~/.zshrc に以下を追加:
