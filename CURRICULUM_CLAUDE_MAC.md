@@ -379,7 +379,7 @@ git push -u origin main
 
 **このフェーズで習得すること:**
 - スラッシュコマンド（/help, /model, /memory, /rename, /resume）
-- Plan Mode初体験（`claude --plan`）
+- Plan Mode初体験（`claude --permission-mode plan`）
 - CLAUDE.mdへの保存習慣（コミュニケーション保存）
 - セッション管理と再開
 
@@ -409,7 +409,7 @@ git push -u origin main
 新しいターミナル（またはVS Code）で Plan Mode を起動:
 
 ```bash
-claude --plan
+claude --permission-mode plan
 ```
 
 Plan Mode内で以下を投げる:
@@ -426,7 +426,7 @@ taskrの基本設計を計画してください（コードは書かない）。
 設計書としてまとめ、私が確認してから次に進みます。
 ```
 
-→ 設計書を確認してPlan Modeを承認（ExitPlanMode）
+→ 設計書を確認してPlan Modeを承認（画面下部の「承認」ボタンをクリック）
 
 ## タスク P1-3: コミュニケーション保存（CLAUDE.md更新）
 
@@ -560,6 +560,7 @@ taskrプロジェクトのディレクトリ構造を作成してください。
 taskr/
   taskr/
     __init__.py
+    __main__.py （`uv run python -m taskr` を可能にする）
     cli.py      （clickベースのエントリポイント）
     models.py   （Taskデータクラス）
     storage.py  （JSON読み書き）
@@ -594,6 +595,8 @@ CRUD操作: create, list_all, update, delete
 cli.py にclickを使ったCLIを実装してください。
 コマンド: add, list, done, delete
 まず add だけ実装して動作確認してから残りを追加してください。
+また、`uv run python -m taskr` で実行できるよう __main__.py も作成してください。
+内容: from taskr.cli import cli; cli()
 ```
 
 ```bash
@@ -705,11 +708,13 @@ mkdir -p ~/.claude/hooks
 
 フック1: Write ツール使用後に ruff で自動フォーマット
   対象: *.py ファイルのみ
-  コマンド: cd ~/study/workspace/learn_claude/taskr && uv run ruff format {file}
+  コマンド: cd /path/to/learn_claude/taskr && uv run ruff format {file}
+  ※ /path/to/learn_claude はlearn_claudeリポジトリをcloneしたディレクトリに変更してください
 
 フック2: Bash ツール使用後に pytest を自動実行
   条件: tests/ ディレクトリが存在する場合のみ
-  コマンド: cd ~/study/workspace/learn_claude/taskr && uv run pytest --tb=short
+  コマンド: cd /path/to/learn_claude/taskr && uv run pytest --tb=short
+  ※ /path/to/learn_claude はlearn_claudeリポジトリをcloneしたディレクトリに変更してください
 
 設定後、Pythonファイルを少し変更してフックが動くか確認してください。
 ```
@@ -875,8 +880,24 @@ git checkout -b feature/phase4-mcp-subagent
 ```
 GitHub MCPをセットアップしてください。
 
-~/study/workspace/learn_claude/.mcp.json を作成して gh mcp serve を設定してください。
-設定後、以下を確認:
+プロジェクトルート（~/study/workspace/learn_claude/）に .mcp.json を以下の内容で作成してください:
+
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxx"
+      }
+    }
+  }
+}
+
+GITHUB_PERSONAL_ACCESS_TOKEN には Phase 0 で作成した PAT を設定してください。
+設定後、Claude Code を再起動して GitHub MCP が読み込まれることを確認してください。
+
+確認:
 1. GitHub MCPでlearn_claudeリポジトリのIssue一覧を取得
 2. Phase 3で作成したIssueをMCP経由でクローズ
 ```
@@ -1037,7 +1058,7 @@ git checkout main && git pull origin main
 # Phase 6: Plan Mode本格活用 + Subagent応用
 
 **このフェーズで習得すること:**
-- `claude --plan` で大機能を設計してから実装するフロー
+- `claude --permission-mode plan` で大機能を設計してから実装するフロー
 - Subagentを並列で動かして設計を補強する
 - 設計判断の文書化
 - `/fast` モードでの高速実装
@@ -1050,7 +1071,7 @@ git checkout main && git pull origin main
 
 Plan Modeで起動:
 ```bash
-claude --plan
+claude --permission-mode plan
 ```
 
 以下を投げる:

@@ -402,7 +402,7 @@ git push -u origin main
 
 **このフェーズで習得すること:**
 - スラッシュコマンド（/help, /model, /memory, /rename, /resume）
-- Plan Mode初体験（`claude --plan`）
+- Plan Mode初体験（`claude --permission-mode plan`）
 - CLAUDE.mdへの保存習慣
 - セッション管理と再開
 
@@ -430,7 +430,7 @@ git push -u origin main
 
 新しいPowerShellウィンドウでPlan Modeを起動:
 ```powershell
-claude --plan
+claude --permission-mode plan
 ```
 
 Plan Mode内で以下を投げる:
@@ -446,7 +446,7 @@ taskrの基本設計を計画してください（コードは書かない）。
 設計書としてまとめ、私が確認してから次に進みます。
 ```
 
-→ 設計書を確認してPlan Modeを承認（ExitPlanMode）
+→ 設計書を確認してPlan Modeを承認（画面下部の「承認」ボタンをクリック）
 
 ## タスク P1-3: コミュニケーション保存（CLAUDE.md更新）
 
@@ -572,6 +572,7 @@ Windows環境（PowerShell）で実行してください。
 taskr/
   taskr/
     __init__.py
+    __main__.py （`uv run python -m taskr` を可能にする）
     cli.py      （clickベースのエントリポイント）
     models.py   （Taskデータクラス）
     storage.py  （JSON読み書き）
@@ -608,6 +609,8 @@ CRUD操作: create, list_all, update, delete
 cli.py にclickを使ったCLIを実装してください。
 コマンド: add, list, done, delete
 まず add だけ実装して動作確認してから残りを追加してください。
+また、`uv run python -m taskr` で実行できるよう __main__.py も作成してください。
+内容: from taskr.cli import cli; cli()
 ```
 
 ```powershell
@@ -882,9 +885,24 @@ git checkout -b feature/phase4-mcp-subagent
 ```
 GitHub MCPをセットアップしてください。
 
-$env:USERPROFILE\study\workspace\learn_claude\.mcp.json を作成して
-gh mcp serve を設定してください。
-設定後、以下を確認:
+プロジェクトルート（$env:USERPROFILE\study\workspace\learn_claude\）に .mcp.json を以下の内容で作成してください:
+
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxx"
+      }
+    }
+  }
+}
+
+GITHUB_PERSONAL_ACCESS_TOKEN には Phase 0 で作成した PAT を設定してください。
+設定後、Claude Code を再起動して GitHub MCP が読み込まれることを確認してください。
+
+確認:
 1. GitHub MCPでlearn_claudeリポジトリのIssue一覧を取得
 2. Phase 3で作成したIssueをMCP経由でクローズ
 ```
@@ -1041,7 +1059,7 @@ git checkout main; git pull origin main
 # Phase 6: Plan Mode本格活用 + Subagent応用
 
 **このフェーズで習得すること:**
-- `claude --plan` で大機能を設計してから実装するフロー
+- `claude --permission-mode plan` で大機能を設計してから実装するフロー
 - Subagentを並列で動かして設計を補強する
 - 設計判断の文書化
 
@@ -1052,7 +1070,7 @@ git checkout main; git pull origin main
 ## タスク P6-1: Plan Modeで大機能を設計
 
 ```powershell
-claude --plan
+claude --permission-mode plan
 ```
 
 ```
