@@ -308,11 +308,10 @@ WindowsのPowerShell環境で実行してください。
 6. "$env:USERPROFILE\.claude\settings.json" に以下のJSONを作成:
    {
      "enabledPlugins": {
-       "claude-md-management@claude-plugins-official": true,
-       "commit-commands@claude-plugins-official": true,
-       "feature-dev@claude-plugins-official": true
+       "claude-md-management@claude-plugins-official": true
      }
    }
+   （`/revise-claude-md` コマンドを使えるようにするため。`/commit` は Phase 2、`/feature-dev` は Phase 8 で有効化する）
 7. CLAUDE.md を以下の内容で作成:
 
 ---
@@ -633,6 +632,15 @@ uv run pytest  # テストが通ることを確認
 ```
 
 ## タスク P2-4: /commit スキル初体験
+
+まず `commit-commands` プラグインを有効化する:
+
+```
+~/.claude/settings.json の enabledPlugins に以下を追加してください:
+"commit-commands@claude-plugins-official": true
+
+追加後、Claude Code を再起動して `/commit` が使えることを確認してください。
+```
 
 ```text
 /commit
@@ -1275,6 +1283,15 @@ git checkout main; git pull origin main
 ---
 
 ## タスク P8-1: /feature-dev でレポート機能実装【Agent Teams本格活用】
+
+まず `feature-dev` プラグインを有効化する:
+
+```
+~/.claude/settings.json の enabledPlugins に以下を追加してください:
+"feature-dev@claude-plugins-official": true
+
+追加後、Claude Code を再起動して `/feature-dev` が使えることを確認してください。
+```
 
 ```text
 /feature-dev
