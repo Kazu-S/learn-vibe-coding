@@ -669,7 +669,7 @@ gh CLIを使って以下のIssueをGitHubに作成してください:
 ## Phase 2 コミット & プッシュ【/commit スキル + 手動push/PR】
 
 ```powershell
-git add -u
+git add taskr/ tests/ README.md   # 新規ファイルも含めてステージング
 ```
 
 ```text

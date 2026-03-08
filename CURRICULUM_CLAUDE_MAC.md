@@ -658,7 +658,7 @@ gh CLIを使って以下のIssueをGitHubに作成してください:
 コミットはSkillに委譲し、push・PRはまだ手動：
 
 ```bash
-git add -u   # 手動でステージング
+git add taskr/ tests/ README.md   # 新規ファイルも含めてステージング
 ```
 
 ```text
